@@ -4,15 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Services\PropertyService;
+use App\Http\Requests\PropertyRequest;
+
 
 class PropertyController extends Controller
 {
+
+    public function __construct(protected PropertyService $PropertyService) 
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try{
+
+            $properties = $this->PropertyService->getProperty();
+            return $properties;
+
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+
+        }
     }
 
     /**
@@ -26,9 +43,10 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PropertyRequest $request)
     {
-        //
+        $this->PropertyService->store($request);
+        return true;
     }
 
     /**
