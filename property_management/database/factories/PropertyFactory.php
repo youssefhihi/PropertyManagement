@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Owner;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +17,9 @@ class PropertyFactory extends Factory
      */
     public function definition(): array
     {
+        $owner = Owner::factory()->create();
         return [
+            'owner_id' => $owner->id,
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'local' => $this->faker->city(),

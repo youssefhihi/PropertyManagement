@@ -11,7 +11,7 @@ class PropertyRepository implements PropertyInterface {
     }   
 
     public function update($request,$property){
-       return $property->update($request->validated());
+       return $property->update($request);
     }
 
     public function destroy($property){
@@ -19,6 +19,10 @@ class PropertyRepository implements PropertyInterface {
     }
 
     public function store($request){
-      return  Property::create($request->validated());      
+      $imageName = time() . "." . $request->image->extension();
+      $request->image->storeAs('public/', $imageName);
+        $data = $request->validated();
+        $data['image'] = $imageName;
+      return   Property::create($data);
     }
 }

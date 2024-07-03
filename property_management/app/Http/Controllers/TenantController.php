@@ -4,15 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use Illuminate\Http\Request;
+use App\Services\TenantService;
+use App\Http\Requests\TenantRequest;
 
 class TenantController extends Controller
 {
+
+    public function __construct(protected TenantService $TenantService) 
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try{
+            $tenants = $this->TenantService->getTenants();
+            return view('admin.tenant', compact('tenants'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+        }
     }
 
     /**
@@ -26,9 +38,14 @@ class TenantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TenantRequest $request)
     {
-        //
+        try{
+            $this->TenantService->store($request->validated());
+            return redirect()->back()->with("success", "Tenant created successfully");
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +53,7 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        //
+        
     }
 
     /**
@@ -50,9 +67,14 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(TenantRequest $request, Tenant $tenant)
     {
-        //
+        try{
+            $this->TenantService->update($request->validated(), $tenant);
+            return redirect()->back()->with("success", "Tenant updated successfully");
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+        }
     }
 
     /**
@@ -60,6 +82,11 @@ class TenantController extends Controller
      */
     public function destroy(Tenant $tenant)
     {
-        //
+        try{
+            $this->TenantService->delete($tenant);
+            return redirect()->back()->with("success", "Tenant deleted successfully");
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+        }
     }
 }

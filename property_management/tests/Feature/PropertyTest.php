@@ -20,16 +20,33 @@ class PropertyTest extends TestCase
         $this->actingAs($user);
         $response = $this->get('/dashboard/properties');
         $response->assertStatus(200);
-        
+
     }
     public function testPropertyCanBeCreated()
     {
         $user = User::factory()->create();
-
         $this->actingAs($user);
         $property = Property::factory()->create();
         $response = $this->post('/dashboard/properties', $property->toArray());
 
+        $response->assertStatus(200);
+    }
+
+    public function testPropertyCanBeUpdated()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $property = Property::factory()->create();
+        $response = $this->put('/dashboard/properties/'.$property->id, $property->toArray());
+        $response->assertStatus(200);
+    }
+
+    public function testPropertyCanBeDeleted()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $property = Property::factory()->create();
+        $response = $this->delete('/dashboard/properties/'.$property->id);
         $response->assertStatus(200);
     }
 }

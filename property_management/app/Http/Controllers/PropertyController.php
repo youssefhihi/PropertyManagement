@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Services\OwnerService;
 use App\Services\PropertyService;
 use App\Http\Requests\PropertyRequest;
 
-
 class PropertyController extends Controller
 {
+    protected $PropertyService;
+    protected $OwnerService;
 
-    public function __construct(protected PropertyService $PropertyService) 
+    public function __construct(PropertyService $PropertyService,OwnerService $OwnerService)
     {
-
+        $this->PropertyService = $PropertyService;
+        $this->OwnerService = $OwnerService;
     }
+
+   
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +29,8 @@ class PropertyController extends Controller
         try{
 
             $properties = $this->PropertyService->getProperty();
-            return $properties;
+            $owners = $this->OwnerService->getOwners();
+            return view('admin.property', compact('properties', 'owners'));
 
         } catch (\Exception $e) {
 
@@ -45,9 +52,18 @@ class PropertyController extends Controller
      */
     public function store(PropertyRequest $request)
     {
-        $this->PropertyService->store($request);
-        return true;
+
+        
+        try {
+            $this->PropertyService->store($request);
+            return redirect()->back()->with("success", "Property created successfully");
+    
+        } catch (\Exception $e) {
+            return dd('Error: ' . $e->getMessage());
+        }
     }
+    
+    
 
     /**
      * Display the specified resource.
@@ -68,9 +84,16 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Property $property)
+    public function update(PropertyRequest $request, Property $property)
     {
-        //
+        try{
+            $this->PropertyService->update($request->validated(), $property);
+            return redirect()->back()->with("success", "Property updated successfully");
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+
+        }
     }
 
     /**
@@ -78,6 +101,13 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        try{
+
+            $this->PropertyService->delete($property);
+            return redirect()->back()->with("success", "Property deleted successfully");
+        }catch (\Exception $e) {
+
+            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+        }
     }
 }

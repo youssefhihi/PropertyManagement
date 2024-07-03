@@ -10,6 +10,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UserTest extends TestCase
 {
     use RefreshDatabase; 
+
+    public function testRegister()
+    {
+        $user = User::factory()->create();
+        $response = $this->post('/register', $user->toArray());
+        $response->assertStatus(200);
+
+    }
     public function testLogin()
     {
         $user = User::factory()->create([
@@ -41,4 +49,19 @@ class UserTest extends TestCase
         $response->assertSessionHasErrors('email');
         $this->assertGuest();
     }
+
+    public function testLogout()
+    {
+        $user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+        ]);
+
+        $this->actingAs($user);
+        $response = $this->post('/logout');
+        $response->assertRedirect('/');
+        $this->assertGuest();
+    }
+
+
 }
