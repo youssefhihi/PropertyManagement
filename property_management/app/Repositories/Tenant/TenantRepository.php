@@ -1,5 +1,7 @@
 <?php
 namespace App\Repositories\Tenant;
+
+use App\Models\Property;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +20,7 @@ class TenantRepository implements TenantInterface {
       return  $Tenant->delete();
     }
 
-    public function store($request){
-      return  Tenant::create($request);      
+    public function store($request){        
+      return  Tenant::create($request->validated());      
     }
 }

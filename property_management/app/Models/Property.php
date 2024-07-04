@@ -26,7 +26,7 @@ class Property extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function tenants()
+    public function tenant()
     {
         return $this->hasOne(Tenant::class);
     }

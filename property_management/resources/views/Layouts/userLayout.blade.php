@@ -13,25 +13,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     </head>
 <body>
-    <div class="container  mx-auto bg-white">
+    <div >
 
-   @include('Layouts.sideBar')
+   @include('Layouts.navbar')
 
     <!-- Main content -->
-    <main class="content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 ">
+    <main>
         {{ $slot }}
     </main>
 
     </div>
         
 
-<script src="{{asset('js/app.js')}}"></script>
-<script src="{{asset('js/property.js')}}"></script>
-<script src="{{asset('js/owner.js')}}"></script>
-<script src="{{asset('js/tenant.js')}}"></script>
+    <script src="{{asset('js/login.js')}}"></script>
 
 
-    
 </body>
 </html>
-

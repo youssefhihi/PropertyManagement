@@ -53,38 +53,43 @@
 <div id="edittenant{{$tenant->id}}" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
     <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
     <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 ">
-    <form action="{{ route('tenants.update', $tenant) }}" method="post" >
+    <form class="editTenant" action="{{ route('tenants.update', $tenant) }}" method="post" data-tenant-id="{{$tenant->id}}">
     @csrf
     @method('PUT')
         <div class=" flex flex-col gap-5">
 
                     <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->name}}" type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input value="{{$tenant->name}}" type="text" name="name" id="name-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="name" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Name
                         </label>
                     </div>
+                    <p id="name-error-edit" class="hidden text-red-500 text-xs mt-1">invalid name format</p>
                     
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="property" class="text-[#0000FF]">property</label>
-                        <select name="property_id" id="property" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
+                        <select name="property_id" id="property-edit" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
                             @foreach ($properties as $property)
                                 <option value="{{ $property->id }}" {{ $property->id == $property->property_id ? 'selected' : '' }}>{{ $property->title }}</option>
                             @endforeach                         
-                        </select>  
+                        </select> 
+                        <p id="property-error-edit" class="hidden text-red-500 text-xs mt-1">Please choose which property</p>
                     </div>
 
                     <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->CIN}}" type="text" name="CIN" id="CIN" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input value="{{$tenant->CIN}}" type="text" name="CIN" id="CIN-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="CIN" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             CIN
                         </label>
+                        <p id="CIN-error-edit" class="hidden text-red-500 text-xs mt-1">invalid CIN format, example: HH000000</p></p>
+                        
                     </div>
                     <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->phone}}" type="text" name="phone" id="phone" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input value="{{$tenant->phone}}" type="text" name="phone" id="phone-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="phone" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             phone number
                         </label>
+                        <p id="phone-error-edit" class="hidden text-red-500 text-xs mt-1">invalid phone number format</p>
             </div>	
             </div>
             <div class="flex justify-end w-full space-x-10">	
@@ -109,39 +114,43 @@
 
 <div id="addtenant" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
     <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
-    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 ">
-	<form action="{{route('tenants.store')}}" method="post" enctype="multipart/form-data">
+    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 overflow-y-scroll h-5/6 ">
+	<form id="tenantCreateForm" action="{{route('tenants.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class=" flex flex-col gap-5">
 
                     <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input type="text" name="name" id="name-create" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="name" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Name
                         </label>
+                        <p id="name-error" class="hidden text-red-500 text-xs mt-1">invalid name format</p>
                     </div>
                     
                     <div class="relative z-0 mb-6 w-full group">
                         <label for="property" class="text-[#0000FF]">property</label>
-                        <select name="property_id" id="property" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
+                        <select name="property_id" id="property-create" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
                             <option value="" selected disabled> choose which property</option>
                         @foreach ($properties as $property)
                                 <option value="{{ $property->id }}" >{{ $property->title }}</option>
                             @endforeach                         
                         </select>  
+                        <p id="property-error" class="hidden text-red-500 text-xs mt-1">Please choose which property</p>
                     </div>
                     <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="CIN" id="CIN" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input type="text" name="CIN" id="CIN-create" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="CIN" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             CIN
                         </label>
+                        <p id="CIN-error" class="hidden text-red-500 text-xs mt-1">invalid CIN format, example: HH000000</p></p>
                     </div>
                     <div class="relative z-0 mb-6 w-full group">
-                        <input type="text" name="phone" id="phone" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <input type="text" name="phone" id="phone-create" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
                         <label for="phone" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             phone number
                         </label>
+                        <p id="phone-error" class="hidden text-red-500 text-xs mt-1">invalid phone number format</p>
             </div>	
             </div>
             <div class="flex justify-end w-full space-x-10">	

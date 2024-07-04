@@ -49,7 +49,7 @@ class TenantController extends Controller
     public function store(TenantRequest $request)
     {
         try{
-            $this->TenantService->store($request->validated());
+            $this->TenantService->store($request);
             return redirect()->back()->with("success", "Tenant created successfully");
         } catch (\Exception $e) {
             return dd("Error: " . $e->getMessage());

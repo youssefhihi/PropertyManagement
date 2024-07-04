@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 class PropertyRepository implements PropertyInterface {
 
     public function get(){
-        return Property::where('status','available')->get();
+        return Property::doesntHave('tenant')->get();
     }   
 
     public function update($request,$property){

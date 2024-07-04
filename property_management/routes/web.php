@@ -10,16 +10,20 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware('guest')->group(function () {
+
 //register
-Route::get('register', [RegisterController::class, 'create'])->name('register');        
+Route::get('/register', [RegisterController::class, 'create'])->name('register');        
 Route::post('register', [RegisterController::class, 'store']);
 //login
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('login', [LoginController::class, 'create'])->name('login'); 
+});       
+
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('login', [LoginController::class, 'create'])->name('login');        
 
-
-Route::prefix('/dashboard')->group(function () {
+Route::middleware(['auth','role:admin'])->prefix('/dashboard')->group(function () {
+    
         //properties routes
     Route::resource('/properties', PropertyController::class);
         //owners routes

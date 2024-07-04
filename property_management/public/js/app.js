@@ -98,3 +98,5 @@ function edittenant(id){
         document.getElementById(`edittenant${id}`).classList.add('hidden')      
     }
 }
+
+
