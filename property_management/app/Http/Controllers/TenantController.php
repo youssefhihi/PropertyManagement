@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Services\TenantService;
+use App\Services\PropertyService;
 use App\Http\Requests\TenantRequest;
 
 class TenantController extends Controller
 {
+    protected $PropertyService;
+    protected $TenantService;
 
-    public function __construct(protected TenantService $TenantService) 
+    public function __construct(PropertyService $PropertyService,TenantService $TenantService)
     {
-
+        $this->PropertyService = $PropertyService;
+        $this->TenantService = $TenantService;
     }
+
+   
+    
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +28,8 @@ class TenantController extends Controller
     {
         try{
             $tenants = $this->TenantService->getTenants();
-            return view('admin.tenant', compact('tenants'));
+            $properties = $this->PropertyService->getProperty();
+            return view('admin.tenant', compact('tenants','properties'));
         } catch (\Exception $e) {
             return redirect()->back()->with("error", "Error: " . $e->getMessage());
         }
@@ -44,7 +52,7 @@ class TenantController extends Controller
             $this->TenantService->store($request->validated());
             return redirect()->back()->with("success", "Tenant created successfully");
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("Error: " . $e->getMessage());
         }
     }
 

@@ -22,8 +22,8 @@ class OwnerController extends Controller
     {
         try{
 
-            $properties = $this->OwnerService->getOwners();
-            return view('admin.owner', compact('properties'));
+            $owners = $this->OwnerService->getOwners();
+            return view('admin.owner', compact('owners'));
 
         } catch (\Exception $e) {
 
@@ -46,11 +46,11 @@ class OwnerController extends Controller
     public function store(OwnerRequest $request)
     {
         try{
-            $this->OwnerService->store($request->validated());
+            $this->OwnerService->store($request);
             return redirect()->back()->with("success", "Owner created successfully");
         } catch (\Exception $e) {
 
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("error", "Error: " . $e->getMessage());
         }
     }
 

@@ -22,6 +22,7 @@ class TenantRequest extends FormRequest
     public function rules(): array
     {
         return [
+                'property_id' => 'required|exists:properties,id',
                 'name' => 'required|string|max:255',
                 'phone' => 'required|string',
                 'CIN' => 'required|string',

@@ -49,3 +49,52 @@ function CreateModel()
         document.getElementById('addProperty').classList.add('hidden')      
     }
 }
+
+function editModel(id)
+{
+   if(document.getElementById(`editProperty${id}`).classList.contains('hidden')){
+        document.getElementById(`editProperty${id}`).classList.remove('hidden')
+    }else{
+        document.getElementById(`editProperty${id}`).classList.add('hidden')      
+    }
+}
+
+function readMore(id){
+    if(document.getElementById(`readMore${id}`).classList.contains('hidden')){
+        document.getElementById(`readMore${id}`).classList.remove('hidden')
+    }else{
+        document.getElementById(`readMore${id}`).classList.add('hidden')      
+    }
+}
+
+function CreateOwner()
+{
+   if(document.getElementById('addOwner').classList.contains('hidden')){
+        document.getElementById('addOwner').classList.remove('hidden')
+    }else{
+        document.getElementById('addOwner').classList.add('hidden')      
+    }
+}
+function editOwner(id){
+   if(document.getElementById(`editOwner${id}`).classList.contains('hidden')){
+        document.getElementById(`editOwner${id}`).classList.remove('hidden')
+    }else{
+        document.getElementById(`editOwner${id}`).classList.add('hidden')      
+    }
+}
+
+function Createtenant()
+{
+   if(document.getElementById('addtenant').classList.contains('hidden')){
+        document.getElementById('addtenant').classList.remove('hidden')
+    }else{
+        document.getElementById('addtenant').classList.add('hidden')      
+    }
+}
+function edittenant(id){
+   if(document.getElementById(`edittenant${id}`).classList.contains('hidden')){
+        document.getElementById(`edittenant${id}`).classList.remove('hidden')
+    }else{
+        document.getElementById(`edittenant${id}`).classList.add('hidden')      
+    }
+}

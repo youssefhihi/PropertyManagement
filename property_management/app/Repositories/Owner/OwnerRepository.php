@@ -19,6 +19,6 @@ class OwnerRepository implements OwnerInterface {
     }
 
     public function store($request){
-      return  Owner::create($request);      
+      return  Owner::create($request->validated());      
     }
 }

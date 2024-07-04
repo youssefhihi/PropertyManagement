@@ -20,9 +20,21 @@
                <img
                   src="{{asset('storage/'.$property->image)}}"
                   alt="image"
-                  class="w-full"
-                  />    
-               <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
+                  class="w-full h-56 object-cover object-center"
+                  /> 
+               <div class="flex justify-end items-end p-4">   
+                  <button onclick="editModel(`{{$property->id}}`)">
+                      <x-icon name="update" class="pb-7"/>
+                  </button>
+                  <form action="{{route('properties.destroy', $property)}}" method="POST" id="deletePropertyForm{{$property->id}}">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="deletePropertyButton" data-index="{{$property->id}}">
+                          <x-icon name="delete" />
+                      </button>
+                  </form>
+               </div>
+               <div class="pb-8  px-8 sm:px-9 sm:pb-9 md:px-7 md:pb-7 xl:pb-9 xl:px-9 text-center">
                   <h3>
                      <a
                         href="javascript:void(0)"
@@ -43,7 +55,10 @@
                      </a>
                   </h3>
                   <p class="text-base text-body-color leading-relaxed mb-7">
-                     {{$property->description}}
+                  {{substr($property->description, 0, 20)}} 
+                  @if (strlen($property->description) > 30)
+                      <button onclick="readMore(`{{$property->id}}`)" class="text-[#0000FF] font-normal text-sm italic">Read more...</button> 
+                  @endif
                   </p>
                   <div class="flex flex-col justify-between space-x-4">
                      <p class="capitalize font-normal text-md">
@@ -60,7 +75,85 @@
                </div>
             </div>
          </div>
+         <div id="readMore{{$property->id}}" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
+            <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+            <div class="w-full  max-w-lg p-10 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 ">
+                <button onclick="readMore(`{{$property->id}}`)" class="w-full flex justify-end">
+                    <x-icon name="close" class="float-right"  />
+                </button>
+            <div class="flex flex-col gap-5 text-center">
+                <p class="text-3xl font-semibold italic text-[#0000FF] ">
+                    {{$property->title}}
+                </p>
+                <p class="text-lg font-Normal  ">
+                    {{$property->description}}
+                </p>
+            </div>
+            </div>
+            </div>
             
+         
+<div id="editProperty{{$property->id}}" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
+            <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+            <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 ">
+            <form action="{{ route('properties.update', $property) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+        <div class=" flex flex-col gap-5">
+                <div class="relative z-0 mb-6 w-full group">
+                        <input type="file" name="image" id="image" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <label for="image" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Image
+                        </label>
+                    </div>
+                    <div class="grid xl:grid-cols-2 xl:gap-6">
+
+                    <div class="relative z-0 mb-6 w-full group pt-5">
+                        <input value="{{$property->title}}" type="text" name="title" id="title" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <label for="title" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Title
+                        </label>
+                    </div>
+                    <div class="relative z-0 mb-6 w-full group">
+                        <label for="owner" class="text-[#0000FF]">Owner</label>
+                        <select name="owner_id" id="owner" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
+                            @foreach ($owners as $owner)
+                                <option value="{{ $owner->id }}" {{ $owner->id == $property->owner_id ? 'selected' : '' }}>{{ $owner->name }}</option>
+                            @endforeach                         
+                        </select>  
+                    </div>
+                </div>
+            
+            <div class="grid xl:grid-cols-2 xl:gap-6">
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input value="{{$property->local}}" type="text" name="local" id="title" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <label for="local" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Local
+                        </label>
+                    </div>
+                    <div class="relative z-0 mb-6 w-full group">
+                        <input value="{{$property->price}}" type="number" name="price" id="price" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                        <label for="price" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Price
+                        </label>
+                    </div>
+            </div>
+                   
+          
+            <div class="relative z-0 mb-6 w-full group">
+                <input value="{{$property->description}}" type="text" name="description" id="description" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
+                <label for="description" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Description
+                </label>
+            </div>		
+            </div>
+            <div class="flex justify-end w-full space-x-10">	
+            <button onclick="CreateModel()" class="text-white max-w-lg bg-red-600 hover:bg-white hover:text-red-600 border border-red-600 focus:ring-4 focus:ring-red-600 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center ">Close</button>
+		<button type="submit" class="text-white max-w-lg bg-[#0000FF] hover:bg-white hover:text-[#0000FF] border border-[#0000FF] focus:ring-4 focus:ring-[#0000FF] font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center ">Save</button>
+        </div>	
+    </form>
+    </div>
+</div>
          @endforeach
          
             
@@ -134,5 +227,17 @@
     </form>
     </div>
 </div>
+
+                <script>    
+                    document.querySelectorAll('.deletePropertyButton').forEach(button => {
+                      button.addEventListener('click', function() {
+                          console.log("Delete button clicked!");
+                          const propertyID = this.getAttribute('data-index');
+                          if (confirm("Are you sure you want to delete this Property? ")) {
+                              document.getElementById('deletePropertyForm' + propertyID).submit();
+                          }
+                      });
+                    });
+                </script>
 
 </x-admin-layout>

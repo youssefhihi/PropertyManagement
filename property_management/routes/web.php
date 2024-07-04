@@ -23,7 +23,7 @@ Route::prefix('/dashboard')->group(function () {
         //properties routes
     Route::resource('/properties', PropertyController::class);
         //owners routes
-    Route::resource('/owners', OwnerController::class);
+        Route::resource('owners', OwnerController::class);
         //tenants routes
     Route::resource('/tenants', TenantController::class);
 

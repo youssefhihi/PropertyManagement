@@ -87,7 +87,7 @@ class PropertyController extends Controller
     public function update(PropertyRequest $request, Property $property)
     {
         try{
-            $this->PropertyService->update($request->validated(), $property);
+            $this->PropertyService->update($request, $property);
             return redirect()->back()->with("success", "Property updated successfully");
         } catch (\Exception $e) {
 
