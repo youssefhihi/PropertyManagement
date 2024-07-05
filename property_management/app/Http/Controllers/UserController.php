@@ -34,20 +34,16 @@ class UserController extends Controller
     
                 $total_data = $data->count();
                 if($total_data > 0){
-                    $output = $data;
-                }else{
-                    $output = $query;
+                    $output = $data->toArray();
                 }
-            } else {
-                $output = 'No query provided';
             }
             $data = [
-                'table_data' => $output,
-                'total_data' => $total_data,
+                'search_data' => $output,
             ];
             echo json_encode($data);
             
         }
+        
             
         
     }

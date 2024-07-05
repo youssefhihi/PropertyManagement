@@ -17,7 +17,10 @@
                 <button class="text-2xl font-normal text-[#0000FF]">Filter By Locals</button>
             </div>
             <div class="flex space-x-2">
-                <div id="filterSide" class="hidden lg:block transition transform -translate-x-80 lg:translate-x-0 ease-in-out duration-300  w-1/3 lg:w-1/4 flex flex-col items-center space-y-4 h-screen overflow-y-scroll p-4 bg-white fixed lg:relative z-50">   
+                <div id="filterSide" class="hidden lg:block transition transform -translate-x-80 lg:translate-x-0 ease-in-out duration-300  w-1/3 lg:w-1/4 flex flex-col items-center space-y-4 h-screen overflow-y-scroll p-4 bg-white fixed lg:relative z-40">
+                    <button class="bg-[#0000FF] text-white py-3 h-14 w-48 px-5 rounded-xl">
+                           <a href="/home">All</a>
+                    </button>   
                     @foreach ($locals as $local)
                     <form action="{{route('filter')}}" method="get">
                         <input type="hidden" name="local" value="{{$local}}">

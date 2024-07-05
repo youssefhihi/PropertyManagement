@@ -3,7 +3,9 @@
 <x-error-input class="mt-2" :messages="$errors->all()" />
 
             <div class="flex justify-between p-2 items-center flex-row w-full bg-[#0000FF] rounded-md">
-                <div></div>                    
+                <div>
+                <input type="search" name="search" id="search" placeholder="Search" class="placeholder:text-[#0000FF] bg-white text-[#0000FF] px-3 py-1 w-56 rounded focus:outline-none focus:ring-0">
+                </div>                    
                 <div class="ml-3 cursor-pointer text-white pr-8" onclick="Createtenant()">
                         <x-icon name="add"/>
                 </div>
@@ -19,7 +21,10 @@
                                 <x-table.th name="Operarion"/>                
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-blue-200">   
+                        <tbody id="tbody" class=" hidden bg-white divide-y divide-blue-200">
+
+                        </tbody>
+                        <tbody id="oldTbody" class="bg-white divide-y divide-blue-200">   
                         @foreach ($tenants as $tenant)
                             <x-table.tr>
                                 <x-table.td>
@@ -48,7 +53,8 @@
                                     </div>
                                 </x-table.td>
                             </x-table.tr>     
-                            
+                           
+
 
 <div id="edittenant{{$tenant->id}}" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
     <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
@@ -102,6 +108,7 @@
              
                         @endforeach
                         </tbody>
+
                     </table>
 
 
@@ -172,7 +179,68 @@
                           }
                       });
                     });
-                </script>
+
+
+                    $(document).ready(function(){
+    function fetch_search_data(query) {
+        console.log("Query:", query);
+        $.ajax({
+            url: "{{ route('tenants.search') }}",
+            method: 'GET',
+            data: { query: query },
+            dataType: 'json',
+            success: function (data) {
+                console.log("Data received:", data);
+                $('#tbody').empty();
+                $("#tbody").removeClass('hidden');
+                $('#oldTbody').addClass('hidden');
+                if (data.search_data && data.search_data.length > 0) {
+                    data.search_data.forEach(function(tenant, index) {
+                        var searchData = `<x-table.tr>
+                            <x-table.td>
+                                <div class="text-sm text-gray-900">#${index}</div>
+                            </x-table.td>
+                            <x-table.td>
+                                <div class="text-sm font-medium text-gray-900">${tenant.name}</div>
+                            </x-table.td>
+                            <x-table.td>
+                                <div class="text-sm font-medium text-gray-900">${tenant.property_title}</div>
+                            </x-table.td>
+                            <x-table.td>
+                                <div class="text-sm font-medium text-gray-900">${tenant.phone}</div>
+                            </x-table.td>
+                            <x-table.td>
+                                <div class="text-sm font-medium text-gray-900">${tenant.CIN}</div>
+                            </x-table.td>
+                            <x-table.td>
+                                <div class="flex justify-center space-x-3">
+                                    <form id="deletetenantForm${tenant.id}" action="/tenants/destroy/${tenant.id}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="deletetenantButton" data-index="${tenant.id}"><x-icon name="delete" class="w-8 h-8"/></button>
+                                    </form>
+                                    <button onclick="edittenant(${tenant.id})"><x-icon name="update"/></button>
+                                </div>
+                            </x-table.td>
+                        </x-table.tr>`;
+                        $('#tbody').append(searchData);});
+                } else {
+                    $('#tbody').append('<tr><td colspan="6">No results found</td></tr>');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data:", status, error);
+                $('#tbody').empty().append('<tr><td colspan="6">An error occurred while fetching data</td></tr>');
+            }
+        });
+    }
+
+    $('#search').on('input', function() {
+        let query = $(this).val();
+        fetch_search_data(query);
+    });
+});
+</script>
 
 
 

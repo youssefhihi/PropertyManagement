@@ -11,19 +11,21 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
     <!-- scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
     </head>
 <body>
     <div >
-
-   @include('Layouts.navbar')
-
-    <!-- Main content -->
-    <main>
-        {{ $slot }}
-    </main>
-
-    </div>
         
+   @include('Layouts.navbar')
+   
+   <!-- Main content -->
+   <main>
+       {{ $slot }}
+    </main>
+    
+</div>
 
     <script src="{{asset('js/login.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>

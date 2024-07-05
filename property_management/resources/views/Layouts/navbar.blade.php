@@ -1,4 +1,4 @@
-<header class=" text-white w-full fixed left-0 top-0 z-20">
+<header class=" text-white w-full fixed left-0 top-0 z-50">
         <nav class=" backdrop-filter backdrop-blur-xl py-4">
             <div class="px-8 md:px-14 lg:px-20 w-full">
                 <div class="flex justify-between items-center">                   

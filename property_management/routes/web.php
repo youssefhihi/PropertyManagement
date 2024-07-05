@@ -21,6 +21,7 @@ Route::get('login', [LoginController::class, 'create'])->name('login');
 Route::get('/home', [UserController::class, 'index'])->name('home.index');        
 Route::get('/home/filter', [UserController::class, 'filter'])->name('filter');        
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/tenants/search', [UserController::class, 'search'])->name('tenants.search');
 
 Route::middleware(['auth','role:admin'])->prefix('/dashboard')->group(function () {
     
@@ -30,5 +31,6 @@ Route::middleware(['auth','role:admin'])->prefix('/dashboard')->group(function (
     Route::resource('owners', OwnerController::class);
         //tenants routes
     Route::resource('/tenants', TenantController::class);
+    
 
 });
