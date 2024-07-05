@@ -6,8 +6,7 @@
             <img src="doctor.png" alt="" class=" ml-2 h-14">
         </div>
         <!-- SPACER -->
-        <div class = "grow h-full flex items-center justify-center " ></div>
-                    
+        <div class = "grow h-full flex items-center justify-center " ></div>                    
                 <div class = "flex-none h-full text-center flex space-x-10  items-center justify-center"> 
                     <div class="flex items-center ">
                         <span id="current-time" class=""> </span>

@@ -9,7 +9,11 @@ class PropertyService
         protected PropertyInterface $PropertyRepository
     ) {
     }
-
+    
+    public function getLocals()
+    {
+        return $this->PropertyRepository->getLocals();
+    }
     public function getProperty()
     {
         return $this->PropertyRepository->get();

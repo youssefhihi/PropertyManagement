@@ -23,7 +23,7 @@
                   class="w-full h-56 object-cover object-center"
                   /> 
                <div class="flex justify-end items-end p-4">   
-                  <button onclick="editModel(`{{$property->id}}`)">
+                  <button onclick="editModelProperty(`{{$property->id}}`)">
                       <x-icon name="update" class="pb-7"/>
                   </button>
                   <form action="{{route('properties.destroy', $property)}}" method="POST" id="deletePropertyForm{{$property->id}}">

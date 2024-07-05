@@ -5,9 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Services\PropertyService;
 
 class UserController extends Controller
 {
+    protected $PropertyService;
+
+    public function __construct(PropertyService $PropertyService)
+    {
+        $this->PropertyService = $PropertyService;
+       
+    }
+
+    public function index()
+    {
+      $properties = $this->PropertyService->getProperty();
+      $locals = $this->PropertyService->getLocals();
+        return view('welcome', compact('properties', 'locals'));
+    }
     public function search(Request $request)
     {
         if($request->ajax())
@@ -40,9 +55,9 @@ class UserController extends Controller
     public function filter(Request $request)
     {
         $local = $request->input('local');
-
+        $locals = $this->PropertyService->getLocals();
         $properties = Property::where('local', $local)->get();
-        return view('admin.tenant', compact('properties'));
+        return view('welcome', compact('properties', 'locals'));
 
 
     }

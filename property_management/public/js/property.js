@@ -175,14 +175,14 @@ function validateInput(input, regex, errorElement) {
 
 // edit model 
 // Function to open edit modal
-function editModel(propertyId) {
+function editModelProperty(propertyId) {
     // Example: Handling modal open/close
     var editPropertyModal = document.getElementById('editProperty' + propertyId);
     editPropertyModal.classList.toggle('hidden');
 }
 
 // Function to validate and submit edit form
-function validateAndSubmitEditForm(propertyId) {
+function validateAndSubmitEditFormProperty(propertyId) {
     var form = document.querySelector('#editProperty' + propertyId + ' form');
     var image = form.querySelector('#image-edit');
     var title = form.querySelector('#title-edit');
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            validateAndSubmitEditForm(propertyId);
+            validateAndSubmitEditFormProperty(propertyId);
         });
     });
 });

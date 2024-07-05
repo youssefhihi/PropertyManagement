@@ -8,7 +8,12 @@ class PropertyRepository implements PropertyInterface {
 
     public function get(){
         return Property::doesntHave('tenant')->get();
-    }   
+    } 
+    
+
+    public function getLocals(){
+        return Property::doesntHave('tenant')->pluck('local');
+    }
 
     public function update($request,$property){
       $imageName = time() . "." . $request->image->extension();

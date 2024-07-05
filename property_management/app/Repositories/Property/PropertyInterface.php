@@ -11,6 +11,8 @@ interface PropertyInterface {
 
     public function store($request);
 
+    public function getLocals();
+
 
  }
 
