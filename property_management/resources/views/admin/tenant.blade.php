@@ -5,7 +5,8 @@
             <div class="flex justify-between p-2 items-center flex-row w-full bg-[#0000FF] rounded-md">
                 <div>
                 <input type="search" name="search" id="search" placeholder="Search" class="placeholder:text-[#0000FF] bg-white text-[#0000FF] px-3 py-1 w-56 rounded focus:outline-none focus:ring-0">
-                </div>                    
+                </div> 
+                <div id="msg"></div>                   
                 <div class="ml-3 cursor-pointer text-white pr-8" onclick="Createtenant()">
                         <x-icon name="add"/>
                 </div>
@@ -192,6 +193,7 @@
             success: function (data) {
                 console.log("Data received:", data);
                 $('#tbody').empty();
+                $('#msg').empty();
                 $("#tbody").removeClass('hidden');
                 $('#oldTbody').addClass('hidden');
                 if (data.search_data && data.search_data.length > 0) {
@@ -225,7 +227,8 @@
                         </x-table.tr>`;
                         $('#tbody').append(searchData);});
                 } else {
-                    $('#tbody').append('<tr><td colspan="6">No results found</td></tr>');
+                    $('#oldTbody').removeClass('hidden');
+                    $('#msg').append(`<p class="text-center text-2xl text-white font-serif">No data found for <b>"${query}"</b></p>`);
                 }
             },
             error: function (xhr, status, error) {

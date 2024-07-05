@@ -23,9 +23,9 @@
                   class="w-full h-56 object-cover object-center"
                   /> 
                <div class="flex justify-end items-end p-4">   
-                  <button onclick="editModelProperty(`{{$property->id}}`)">
+                  <a href="{{route('properties.edit', $property)}}" >
                       <x-icon name="update" class="pb-7"/>
-                  </button>
+                  </a>
                   <form action="{{route('properties.destroy', $property)}}" method="POST" id="deletePropertyForm{{$property->id}}">
                       @csrf
                       @method('DELETE')
@@ -91,75 +91,7 @@
             </div>
             </div>
             </div>
-            <div id="editProperty{{$property->id}}" class="hidden min-w-screen h-screen fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
-            <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
-                    <div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg overflow-y-scroll h-5/6 bg-white mt-20">
-                    <form class="edit-form" action="{{ route('properties.update', $property) }}" method="post" enctype="multipart/form-data" data-property-id="{{$property->id}}">
-                    @csrf
-                    @method('PUT')
-                    <div class="flex flex-col gap-5">
-                        <div class="relative z-0 mb-6 w-full group">
-                            <input value="{{$property->image}}" type="file" name="image" id="image-edit" class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0 peer" placeholder=" " />
-                            <label for="image" class="absolute text-md text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Image
-                            </label>
-                            <p id="image-error-edit" class="hidden text-red-500 text-xs mt-1">Please upload an image</p>
-                        </div>
-                        <div class="grid xl:grid-cols-2 xl:gap-6">
-                            <div class="relative z-0 mb-6 w-full group pt-5">
-                                <input value="{{$property->title}}" type="text" name="title" id="title-edit" class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0 peer" placeholder=" " />
-                                <label for="title" class="absolute text-md text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Title
-                                </label>
-                                <p id="title-error-edit" class="hidden text-red-500 text-xs mt-1">Invalid title format</p>
-                            </div>
-                            <div class="relative z-0 mb-6 w-full group">
-                                <label for="owner" class="text-[#0000FF]">Owner</label>
-                                <select name="owner_id" id="owner-edit" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
-                                    @foreach ($owners as $owner)
-                                    <option value="{{ $owner->id }}" {{ $owner->id == $property->owner_id ? 'selected' : '' }}>{{ $owner->name }}</option>
-                                    @endforeach
-                                </select>
-                                <p id="owner-error-edit" class="hidden text-red-500 text-xs mt-1">Please select an owner</p>
-                            </div>
-                        </div>
-
-                        <div class="grid xl:grid-cols-2 xl:gap-6">
-                            <div class="relative z-0 mb-6 w-full group">
-                                <input value="{{$property->local}}" type="text" name="local" id="local-edit" class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0 peer" placeholder=" " />
-                                <label for="local" class="absolute text-md text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Local
-                                </label>
-                                <p id="local-error-edit" class="hidden text-red-500 text-xs mt-1">Invalid local format</p>
-                            </div>
-                            <div class="relative z-0 mb-6 w-full group">
-                                <input value="{{$property->price}}" type="number" name="price" id="price-edit" class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0 peer" placeholder=" " />
-                                <label for="price" class="absolute text-md text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Price
-                                </label>
-                                <p id="price-error-edit" class="hidden text-red-500 text-xs mt-1">Invalid price format</p>
-                            </div>
-                        </div>
-
-                        <div class="relative z-0 mb-6 w-full group">
-                            <input value="{{$property->description}}" type="text" name="description" id="description-edit" class="block py-2.5 px-0 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0 peer" placeholder=" " />
-                            <label for="description" class="absolute text-md text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Description
-                            </label>
-                            <p id="description-error-edit" class="hidden text-red-500 text-xs mt-1">Invalid description format</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-end w-full space-x-10">
-                        <button type="button" onclick="editModel('{{$property->id}}')" class="text-white max-w-lg bg-red-600 hover:bg-white hover:text-red-600 border border-red-600 focus:ring-4 focus:ring-red-600 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center">
-                            Close
-                        </button>
-                        <button type="submit" class="text-white max-w-lg bg-[#0000FF] hover:bg-white hover:text-[#0000FF] border border-[#0000FF] focus:ring-4 focus:ring-[#0000FF] font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center">
-                            Save
-                        </button>
-                    </div>
-                </form>
-            </div>
-</div>
+           
  @endforeach
          
             

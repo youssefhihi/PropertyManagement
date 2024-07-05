@@ -78,7 +78,13 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        try{
+            $owners = $this->OwnerService->getOwners();
+            return view('admin.editProperty', compact('property', 'owners'));
+        } catch (\Exception $e) {
+
+            return dd("Error: " . $e->getMessage());
+        }
     }
 
     /**
@@ -88,10 +94,10 @@ class PropertyController extends Controller
     {
         try{
             $this->PropertyService->update($request, $property);
-            return redirect()->back()->with("success", "Property updated successfully");
+            return redirect('/dashboard/properties')->with("success", "Property updated successfully");
         } catch (\Exception $e) {
 
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("Error: " . $e->getMessage());
 
         }
     }

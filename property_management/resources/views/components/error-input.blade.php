@@ -1,8 +1,10 @@
 @props(['messages'])
 
 @if ($messages)
-<div {!! $attributes->merge(['class' => 'bg-red-100 text-red-800  text-center  py-1 rounded relative']) !!} role="alert">
-        @foreach ((array) $messages as $message)
+<div class="flex flex-col gap-0.5 mb-1">
+  @foreach ((array) $messages as $message)
+  <div {!! $attributes->merge(['class' => ' bg-red-100 text-red-800  text-center  py-1 rounded relative']) !!} role="alert">
+        
         <div class="inline-block max-sm:mb-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 inline" viewBox="0 0 32 32">
             <path
@@ -12,7 +14,9 @@
           <strong class="font-bold text-base">Error!</strong>
         </div>
         <span class="block sm:inline text-sm mx-1 max-sm:ml-0 max-sm:mt-1 text-red-700">{{ $message }}</span>    
+        
+      </div>
         @endforeach
-    </div>
+  </div>
   
 @endif

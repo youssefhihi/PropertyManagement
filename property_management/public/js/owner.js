@@ -90,3 +90,11 @@ function validateInput(input, regex, errorElement) {
         input.classList.remove('border-red-600', 'focus:border-red-500');
     }
 }
+
+
+
+
+
+
+
+

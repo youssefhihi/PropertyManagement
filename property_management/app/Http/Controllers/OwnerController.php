@@ -59,14 +59,14 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Owner $owner)
     {
+        return view('admin.editOwner', compact('owner'));
       
     }
 
@@ -78,11 +78,11 @@ class OwnerController extends Controller
         try{
 
             $this->OwnerService->update($request->validated(), $owner);
-            return Redirect::back()->with("success", "Owner updated successfully");
+            return redirect('/dashboard/owners')->with("success", "Owner updated successfully");
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("error", "Error: " . $e->getMessage());
 
         }
     }
@@ -98,7 +98,7 @@ class OwnerController extends Controller
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("Error: " . $e->getMessage());
 
         }
     }

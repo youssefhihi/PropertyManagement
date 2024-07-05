@@ -38,7 +38,7 @@ class UserController extends Controller
                 }
             }
             $data = [
-                'search_data' => $output,
+                'search_data' => $output,               
             ];
             echo json_encode($data);
             
