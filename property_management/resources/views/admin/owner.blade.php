@@ -1,6 +1,6 @@
 <x-admin-layout>
 <x-error-input class="mt-2" :messages="$errors->all()" />
-
+<x-success-message class="mt-2"/>
             <div class="flex justify-between p-2 items-center flex-row w-full bg-[#0000FF] rounded-md">
                 <div></div>                    
                 <div class="ml-3 cursor-pointer text-white pr-8" onclick="CreateOwner()">

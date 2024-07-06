@@ -5,6 +5,7 @@
     <section class=" pb-10 lg:pb-20 bg-white">
         <div class="container">
             <x-error-input class="mt-2" :messages="$errors->all()" />
+            <x-success-message class="mt-2"/>
             <div class="flex justify-between  items-center">
             <p class="text-left text-4xl font-Normal italic text-[#0000FF] ">Propeties</p>
             <button onclick="CreateModel()" class="flex duration-300 ease-in-out bg-[#0000FF] hover:bg-white hover:text-[#0000FF] text-white font-semibold border border-[#0000FF] py-1 px-2 rounded">
