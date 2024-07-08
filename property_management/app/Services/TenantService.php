@@ -29,5 +29,9 @@ class TenantService
     {
         return $this->TenantRepository->store($data);
     }
+
+    public function getTenantsCount(){
+        return $this->TenantRepository->getTenantsCount();
+    }
   
 }

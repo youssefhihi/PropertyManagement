@@ -34,4 +34,16 @@ class PropertyRepository implements PropertyInterface {
         $data['image'] = $imageName;
       return   Property::create($data);
     }
+
+    public function getCount() {
+      $propertyFree = Property::doesntHave('tenant')->count();
+      $propertyHasTenant = Property::has('tenant')->count();
+      $totalProperties = Property::count();
+  
+      return [
+          'propertyFree' => $propertyFree,
+          'propertyHasTenant' => $propertyHasTenant,
+          'totalProperties' => $totalProperties
+      ];
+  }
 }

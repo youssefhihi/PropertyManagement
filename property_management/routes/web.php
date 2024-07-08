@@ -18,19 +18,23 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('login', [LoginController::class, 'create'])->name('login'); 
 });       
 
-Route::get('/home', [UserController::class, 'index'])->name('home.index');        
-Route::get('/home/filter', [UserController::class, 'filter'])->name('filter');        
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/tenants/search', [UserController::class, 'search'])->name('tenants.search');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::middleware(['auth','role:user'])->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('home.index');        
+    Route::get('/filter', [UserController::class, 'filter'])->name('filter');        
+});
 
+Route::get('/tenants/search', [UserController::class, 'search'])->name('tenants.search');
 Route::middleware(['auth','role:admin'])->prefix('/dashboard')->group(function () {
     
-        //properties routes
+    //properties routes
     Route::resource('/properties', PropertyController::class);
-        //owners routes
+    //owners routes
     Route::resource('owners', OwnerController::class);
-        //tenants routes
+    //tenants routes
     Route::resource('/tenants', TenantController::class);
+
+    Route::get('/', [UserController::class, 'statistic']);
     
 
 });

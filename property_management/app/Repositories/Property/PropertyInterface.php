@@ -13,6 +13,8 @@ interface PropertyInterface {
 
     public function getLocals();
 
+    public function getCount();
+
 
  }
 

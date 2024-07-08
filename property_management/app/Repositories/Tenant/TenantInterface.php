@@ -11,6 +11,8 @@ interface TenantInterface {
 
     public function store($request);
 
+    public function getTenantsCount();
+
 
  }
 

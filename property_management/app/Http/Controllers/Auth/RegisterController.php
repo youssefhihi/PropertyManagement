@@ -25,6 +25,6 @@ class RegisterController extends Controller
         $user = User::create($request->validated());
         event(new Registered($user));
         Auth::login($user);
-        return redirect('/home')->with('success', 'Registration successful! Welcome to our platform.');
+        return redirect('/')->with('success', 'Registration successful! Welcome to our platform.');
     }
 }

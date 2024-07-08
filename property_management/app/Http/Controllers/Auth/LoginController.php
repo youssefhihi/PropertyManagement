@@ -23,9 +23,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Authentication passed...
             if(Auth::user()->role == 'admin'){
-                return redirect()->intended('/dashboard');
+                return redirect('/dashboard')->with('success', 'Login successful! Welcome Admin');
             }else{
-                return redirect()->intended('/home');
+                return redirect('/')->with('success', 'Login successful! Welcome to our platform.');
             }
         }
 
@@ -46,4 +46,5 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
 }

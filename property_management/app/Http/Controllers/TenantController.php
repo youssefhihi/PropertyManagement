@@ -69,7 +69,8 @@ class TenantController extends Controller
      */
     public function edit(Tenant $tenant)
     {
-        //
+        $properties = $this->PropertyService->getProperty();
+        return view('admin.editTenant', compact('tenant','properties'));
     }
 
     /**
@@ -79,9 +80,9 @@ class TenantController extends Controller
     {
         try{
             $this->TenantService->update($request->validated(), $tenant);
-            return redirect()->back()->with("success", "Tenant updated successfully");
+            return redirect("/dashboard/tenants")->with("success", "Tenant updated successfully");
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", "Error: " . $e->getMessage());
+            return dd("Error: " . $e->getMessage());
         }
     }
 

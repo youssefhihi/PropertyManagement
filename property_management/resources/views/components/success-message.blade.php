@@ -10,7 +10,6 @@
           </svg>
           <strong class="font-bold text-base">Success!</strong>
         </div>
-        <span class="block sm:inline text-sm mx-4 max-sm:ml-0 max-sm:mt-1">{{session('success')}}</span>
-        
+        <span class="block sm:inline text-sm mx-4 max-sm:ml-0 max-sm:mt-1">{{session('success')}}</span>     
     </div>
 @endif

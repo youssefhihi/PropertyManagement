@@ -1,4 +1,4 @@
-<header class=" text-white w-full fixed left-0 top-0 z-50">
+<header class=" text-white w-full fixed left-0 top-0 z-20">
         <nav class=" backdrop-filter backdrop-blur-xl py-4">
             <div class="px-8 md:px-14 lg:px-20 w-full">
                 <div class="flex justify-between items-center">                   
@@ -7,13 +7,7 @@
                                 <img class="h-12 rounded-full" src="{{asset('imgs/logo.png')}}" alt="">     
                             </a>
                         </div>                 
-                    <div class="flex items-center hidden md:flex space-x-12 items-center font-normal">
-                        <a href="#" class="relative text-white hover:text-[#0000FF] cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-[#0000FF] before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-[#0000FF] after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]">Home</a>
-                        <a href="#about" class="relative text-white hover:text-[#0000FF] cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-[#0000FF] before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-[#0000FF] after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]">About Us</a>
-                        <a href="#service"class="relative text-white hover:text-[#0000FF] cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-[#0000FF] before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-[#0000FF] after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]">Service</a>
-                        <a href="#contact"class="relative text-white hover:text-[#0000FF] cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-[#0000FF] before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-[#0000FF] after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]">Contact</a>
-                        <a href="#"class="relative text-white hover:text-[#0000FF] cursor-pointer transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-700 before:absolute before:bg-[#0000FF] before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-700 after:absolute after:bg-[#0000FF] after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]">Blog</a>
-                    </div>
+                  
                     @auth
                     <div class="">
                     <form method="POST" action="{{ route('logout') }}" class="flex items-end justify-end w-full  py-2 pr-10">

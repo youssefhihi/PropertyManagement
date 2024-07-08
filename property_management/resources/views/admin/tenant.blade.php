@@ -3,6 +3,7 @@
 <x-error-input class="mt-2" :messages="$errors->all()" />
 <x-success-message class="mt-2"/>
 
+        <p class="text-left text-4xl font-Normal italic text-[#0000FF] mb-3 ">Tenants</p>
 
             <div class="flex justify-between p-2 items-center flex-row w-full bg-[#0000FF] rounded-md">
                 <div>
@@ -52,62 +53,14 @@
                                         @method('DELETE')
                                         <button type="button" class="deletetenantButton" data-index="{{$tenant->id}}"><x-icon name="delete" class="w-8 h-8"/></button>
                                     </form>                 
-                                    <button onclick="edittenant(`{{$tenant->id}}`)"><x-icon name="update"/></button>
+                                    <a href="{{route('tenants.edit', $tenant)}}"><x-icon name="update"/></a>
                                     </div>
                                 </x-table.td>
                             </x-table.tr>     
                            
 
 
-<div id="edittenant{{$tenant->id}}" class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
-    <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
-    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white mt-20 ">
-    <form class="editTenant" action="{{ route('tenants.update', $tenant) }}" method="post" data-tenant-id="{{$tenant->id}}">
-    @csrf
-    @method('PUT')
-        <div class=" flex flex-col gap-5">
 
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->name}}" type="text" name="name" id="name-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
-                        <label for="name" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Name
-                        </label>
-                    </div>
-                    <p id="name-error-edit" class="hidden text-red-500 text-xs mt-1">invalid name format</p>
-                    
-                    <div class="relative z-0 mb-6 w-full group">
-                        <label for="property" class="text-[#0000FF]">property</label>
-                        <select name="property_id" id="property-edit" class="block py-2.5 px-3 w-full text-md bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none focus:border-blue-600 focus:outline-none focus:ring-0">
-                            @foreach ($properties as $property)
-                                <option value="{{ $property->id }}" {{ $property->id == $property->property_id ? 'selected' : '' }}>{{ $property->title }}</option>
-                            @endforeach                         
-                        </select> 
-                        <p id="property-error-edit" class="hidden text-red-500 text-xs mt-1">Please choose which property</p>
-                    </div>
-
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->CIN}}" type="text" name="CIN" id="CIN-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
-                        <label for="CIN" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            CIN
-                        </label>
-                        <p id="CIN-error-edit" class="hidden text-red-500 text-xs mt-1">invalid CIN format, example: HH000000</p></p>
-                        
-                    </div>
-                    <div class="relative z-0 mb-6 w-full group">
-                        <input value="{{$tenant->phone}}" type="text" name="phone" id="phone-edit" class="block py-2.5 px-0 w-full text-md  bg-transparent border-0 border-b-2 border-[#0000FF] appearance-none  border-[#0000FF] focus:border-blue-300 focus:outline-none focus:ring-0  peer" placeholder=" "  />
-                        <label for="phone" class="absolute text-md  text-[#0000FF] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-300 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            phone number
-                        </label>
-                        <p id="phone-error-edit" class="hidden text-red-500 text-xs mt-1">invalid phone number format</p>
-            </div>	
-            </div>
-            <div class="flex justify-end w-full space-x-10">	
-            <button onclick="edittenant()" class="text-white max-w-lg bg-red-600 hover:bg-white hover:text-red-600 border border-red-600 focus:ring-4 focus:ring-red-600 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center ">Close</button>
-		<button type="submit" class="text-white max-w-lg bg-[#0000FF] hover:bg-white hover:text-[#0000FF] border border-[#0000FF] focus:ring-4 focus:ring-[#0000FF] font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center ">Save</button>
-        </div>	
-    </form>
-    </div>
-</div>
              
                         @endforeach
                         </tbody>
@@ -208,7 +161,7 @@
                                 <div class="text-sm font-medium text-gray-900">${tenant.name}</div>
                             </x-table.td>
                             <x-table.td>
-                                <div class="text-sm font-medium text-gray-900">${tenant.property_title}</div>
+                                <div class="text-sm font-medium text-gray-900">${tenant.property.title}</div>
                             </x-table.td>
                             <x-table.td>
                                 <div class="text-sm font-medium text-gray-900">${tenant.phone}</div>

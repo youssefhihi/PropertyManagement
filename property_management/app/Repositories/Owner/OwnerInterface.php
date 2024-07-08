@@ -11,6 +11,8 @@ interface OwnerInterface {
 
     public function store($request);
 
+    public function getOwnersCount();
+
 
  }
 

@@ -4,11 +4,11 @@
             <div class="container mx-auto text-center text-white">
                 <h1 class="text-5xl font-medium text-black mb-6">Welcome to <span class="font-bold text-[#0000FF]">{{config('app.name')}}</span></h1>
                 <p class="text-xl mb-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                <a href="#" class="bg-[#0000FF] text-white py-4 px-12 rounded-full hover:bg-blue-800">Demo</a>
+                <a href="#properties" class="bg-[#0000FF] text-white py-4 px-12 rounded-full hover:bg-blue-800">Demo</a>
             </div>
         </div>
     </section>
-    <section class="bg-white">
+    <section class="bg-white" id="properties">
         <div class="container mx-auto px-4 py-10 mb-16 relative">
             <div class="text-center">
                 <h1 class="text-3xl font-bold mb-6">Discover the Available Properties for You</h1>
@@ -17,9 +17,10 @@
                 <button class="text-2xl font-normal text-[#0000FF]">Filter By Locals</button>
             </div>
             <div class="flex space-x-2">
-                <div id="filterSide" class="hidden lg:block transition transform -translate-x-80 lg:translate-x-0 ease-in-out duration-300  w-1/3 lg:w-1/4 flex flex-col items-center space-y-4 h-screen overflow-y-scroll p-4 bg-white fixed lg:relative z-40">
+                <div id="filterSide" class="hidden lg:block transition transform -translate-x-80 lg:translate-x-0 ease-in-out duration-300 border-2 border-[#0000FF]   w-1/3 lg:w-1/4 flex flex-col items-center space-y-4 max-h-screen  overflow-y-scroll overflow-x-hidden p-4 bg-white fixed lg:relative z-50">
+                   <p class="text-[#0000FF] font-semibold text-xl lg:text-2xl  text-center mb-4 underline   ">Filter By Locals</p>
                     <button class="bg-[#0000FF] text-white py-3 h-14 w-48 px-5 rounded-xl">
-                           <a href="/home">All</a>
+                           <a href="/">All</a>
                     </button>   
                     @foreach ($locals as $local)
                     <form action="{{route('filter')}}" method="get">
@@ -87,7 +88,7 @@
             var filterSide = document.getElementById('filterSide');
             if (filterSide.classList.contains('hidden')) {
                 filterSide.classList.remove('hidden', '-translate-x-full');
-                filterSide.classList.add('translate-x-0', 'fixed', 'top-0', 'left-0');
+                filterSide.classList.add('translate-x-0', 'fixed', 'top-16', 'left-0');
             } else {
                 filterSide.classList.add('hidden', '-translate-x-full');
                 filterSide.classList.remove('translate-x-0', 'fixed', 'top-0', 'left-0');

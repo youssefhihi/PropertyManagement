@@ -29,5 +29,9 @@ class OwnerService
     {
         return $this->OwnerRepository->store($request);
     }
+
+    public function getOwnersCount(){
+        return $this->OwnerRepository->getOwnersCount();
+    }
   
 }

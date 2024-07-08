@@ -23,4 +23,8 @@ class TenantRepository implements TenantInterface {
     public function store($request){        
       return  Tenant::create($request->validated());      
     }
+
+    public function getTenantsCount(){
+        return Tenant::count();
+    }
 }

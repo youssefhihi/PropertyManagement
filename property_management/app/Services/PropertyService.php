@@ -33,5 +33,9 @@ class PropertyService
     {
         return $this->PropertyRepository->store($data);
     }
+
+    public function getCount(){
+        return $this->PropertyRepository->getCount();
+    }
   
 }

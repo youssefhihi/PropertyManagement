@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Services\OwnerService;
+use App\Services\TenantService;
 use App\Services\PropertyService;
 
 class UserController extends Controller
 {
     protected $PropertyService;
+    protected $TenantService;
+    protected $OwnerService;
 
-    public function __construct(PropertyService $PropertyService)
+
+    public function __construct(PropertyService $PropertyService, TenantService $TenantService , OwnerService $OwnerService)
     {
         $this->PropertyService = $PropertyService;
+        $this->TenantService = $TenantService;
+        $this->OwnerService = $OwnerService;
        
     }
 
@@ -23,6 +30,13 @@ class UserController extends Controller
       $locals = $this->PropertyService->getLocals();
         return view('welcome', compact('properties', 'locals'));
     }
+    public function statistic()
+    {
+        $propertiesCount = $this->PropertyService->getCount();
+        $ownersCount = $this->OwnerService->getOwnersCount();
+        $tenantsCount = $this->TenantService->getTenantsCount();
+        return view('admin.dashboard', compact('propertiesCount', 'ownersCount','tenantsCount'));
+    }
     public function search(Request $request)
     {
         if($request->ajax())
@@ -30,7 +44,7 @@ class UserController extends Controller
             $query = $request->get('query');
             $output =[];
             if($query != ''){
-                $data = Tenant::where('name','like', '%'.$query.'%')->get();
+                $data = Tenant::where('name','like', '%'.$query.'%')->with('property')->get();
     
                 $total_data = $data->count();
                 if($total_data > 0){
