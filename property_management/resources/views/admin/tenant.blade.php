@@ -137,9 +137,8 @@
                     });
 
 
-                    $(document).ready(function(){
+    $(document).ready(function(){
     function fetch_search_data(query) {
-        console.log("Query:", query);
         $.ajax({
             url: "{{ route('tenants.search') }}",
             method: 'GET',

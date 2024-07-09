@@ -16,10 +16,10 @@ var imageError = propertyCreateForm.querySelector('#image-error');
 var ownerError = propertyCreateForm.querySelector('#owner-error');
 
 // Regex patterns
-const titleRegex = /^[a-zA-Z0-9\s]{3,50}$/; // Example: at least 3 characters, letters, numbers, and spaces allowed
-const localRegex = /^[a-zA-Z0-9\s]{5,100}$/; // Example: at least 5 characters, letters, numbers, and spaces allowed
-const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/; // Example: positive numbers with optional decimal
-const descriptionRegex = /^[a-zA-Z0-9\s\.,!?]{10,}$/; // Example: at least 10 characters, letters, numbers, spaces, and basic punctuation
+const titleRegex = /^[a-zA-Z0-9\s]{3,50}$/;
+const localRegex = /^[a-zA-Z0-9\s]{3,100}$/; 
+const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/; 
+const descriptionRegex = /^[a-zA-Z0-9\s\.,!?]{10,}$/; 
 
 // Form submit event
 propertyCreateForm.addEventListener('submit', function(e) {
