@@ -4,7 +4,6 @@
 <x-success-message class="mt-2"/>
 
         <p class="text-left text-4xl font-Normal italic text-[#0000FF] mb-3 ">Tenants</p>
-
             <div class="flex justify-between p-2 items-center flex-row w-full bg-[#0000FF] rounded-md">
                 <div>
                 <input type="search" name="search" id="search" placeholder="Search" class="placeholder:text-[#0000FF] bg-white text-[#0000FF] px-3 py-1 w-56 rounded focus:outline-none focus:ring-0">

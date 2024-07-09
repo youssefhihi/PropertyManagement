@@ -10,7 +10,7 @@ libmariadb-dev\
 unzip zip \ 
 zlib1g-dev\
 libpng-dev\ 
-libjpeg-dev libfreetypeб-dev \ 
+libjpeg-dev libfreetypeб-dev \  
 libjpeg62-turbo-dev \ 
 libpng-dev L
 
